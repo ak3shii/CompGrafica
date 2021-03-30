@@ -1,0 +1,258 @@
+<!-- Autor: Jonathan David Rodriguez Rodriguez -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"
+        integrity="sha512-ZGgXd6TB5qjtvTU6Q5o/LJM4pwLNy8U8XXJh+vJZDXp2wC8ASrl4WOeivaq2fpYc3TnTCLzyDvVjY8YhvNYaXg=="
+        crossorigin="anonymous"></script>
+    <script>
+        var scene;
+        var camera;
+        var renderer;
+        var material;
+        var sphere;
+        var cube;
+        var cylinder;
+
+        function createCamera() {
+            camera = new THREE.PerspectiveCamera(
+                75,
+                window.innerWidth / window.innerHeight,
+                1,
+                100
+            );
+            camera.position.set(1, 0, 10);
+        }
+
+        function createRenderer() {
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+        }
+        
+        //Cabeza
+        function createHead() {
+            let geometry = new THREE.SphereGeometry(1.26, 10, 10);
+            let material = new THREE.MeshLambertMaterial({color: 0x9B9B9B
+            });
+            sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+            sphere.position.set(1, 1.6, 1.8);
+        }
+
+        function createHead2() {
+            let geometry = new THREE.CylinderGeometry(1.2, 1.2, 0.1, 32);
+            let material = new THREE.MeshLambertMaterial({ color: 0x0833A2 });
+            let cylinder = new THREE.Mesh(geometry, material);
+            cylinder.position.set(1, 1.57, 2);
+            scene.add(cylinder);
+        }
+
+        //Cara
+        function createFace() {
+            let geometry = new THREE.CubeGeometry(0.65, 0.47, 0.7);
+            let material = new THREE.MeshLambertMaterial ({ color:  0x0833A2 });
+            cube = new THREE.Mesh(geometry, material);
+            cube.position.set(1, 2, 2.67);
+            scene.add(cube);
+        }
+        //Cara ojo
+        function createFace1() {
+            let geometry = new THREE.SphereGeometry(0.2, 10, 10);
+            let material = new THREE.MeshLambertMaterial({
+                color: 0x000000,
+                wireframe: false,
+            });
+            sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+            sphere.position.set(1, 2, 2.9);
+        }
+        function createFace2() {
+            let geometry = new THREE.SphereGeometry(0.08, 10, 10);
+            let material = new THREE.MeshLambertMaterial({
+                color: 0xff0000,
+                wireframe: false,
+            });
+            sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+            sphere.position.set(0.78, 1.85, 3);
+        }
+        
+        //Cuerpo
+        function createBody() {
+            let geometry = new THREE.CylinderGeometry(1.2, 1.2, 2.8, 32);
+            let material = new THREE.MeshLambertMaterial({ color: 0xffffff });
+            let cylinder = new THREE.Mesh(geometry, material);
+            cylinder.position.set(1, 0.2, 2);
+            scene.add(cylinder);
+        }
+        //CuerpoColor
+        function createBody1() {
+            let geometry = new THREE.CubeGeometry(1.2, 0.2, 0.2);
+            let material = new THREE.MeshLambertMaterial({ color: 0x0833A2 });
+            let cube = new THREE.Mesh(geometry, material);
+            cube.position.set(1, 1.2,3.1);
+            scene.add(cube);
+        }
+        function createBody2() {
+            let geometry = new THREE.CubeGeometry(1.2, 0.2, 0.2);
+            let material = new THREE.MeshLambertMaterial({ color: 0x0833A2 });
+            let cube = new THREE.Mesh(geometry, material);
+            cube.position.set(1, 0.9,3.1);
+            scene.add(cube);
+        }
+        function createBody4() {
+            let geometry = new THREE.CubeGeometry(0.8, 0.8, 0.2);
+            let material = new THREE.MeshLambertMaterial({ color: 0x0833A2 });
+            let cube = new THREE.Mesh(geometry, material);
+            cube.position.set(1, 0.1,3.1);
+            scene.add(cube);
+        }
+        function createBody5() {
+            let geometry = new THREE.CubeGeometry(0.48, 0.25, 0.2);
+            let material = new THREE.MeshLambertMaterial({ color: 0x9b9b9b });
+            let cube = new THREE.Mesh(geometry, material);
+            cube.position.set(1, 0.25,3.12);
+            scene.add(cube);
+        }
+        function createBody6() {
+            let geometry = new THREE.CubeGeometry(0.48, 0.25, 0.2);
+            let material = new THREE.MeshLambertMaterial({ color: 0x9b9b9b });
+            let cube = new THREE.Mesh(geometry, material);
+            cube.position.set(1, -0.08,3.12);
+            scene.add(cube);
+        }
+        
+        //Brazo1
+        function createArm1() {
+            let geometry = new THREE.CubeGeometry(0.7, 0.8, 0.7);
+            let material = new THREE.MeshLambertMaterial ({ color:  0xffffff });
+            cube = new THREE.Mesh(geometry, material);
+            cube.position.set(-0.3, 0.5, 2);
+            scene.add(cube);
+        }
+        //Brazo1.1
+        function createArm11() {
+            let geometry = new THREE.CubeGeometry(0.4, 2, 0.7);
+            let material = new THREE.MeshLambertMaterial ({ color:  0xffffff });
+            cube = new THREE.Mesh(geometry, material);
+            cube.position.set(-0.3, -0.8, 2);
+            scene.add(cube);
+        }
+        //Brazo1.2
+        function createArm12() {
+            let geometry = new THREE.CylinderGeometry(0.4, 0.6, 0.7, 32);
+            let material = new THREE.MeshLambertMaterial({ color: 0xffffff });
+            let cylinder = new THREE.Mesh(geometry, material);
+            cylinder.position.set(-0.3, -2.03, 2);
+            scene.add(cylinder);
+        }
+        //Brazo1.3
+        function createArm13() {
+            let geometry = new THREE.CubeGeometry(0.17, 0.9, 0.2);
+            let material = new THREE.MeshLambertMaterial ({ color:  0x0833A2 });
+            cube = new THREE.Mesh(geometry, material);
+            cube.position.set(-0.3, -0.5, 2.3);
+            scene.add(cube);
+        }
+        //Brazo2
+        function createArm2() {
+            let geometry = new THREE.CubeGeometry(0.7, 0.8, 0.7);
+            let material = new THREE.MeshLambertMaterial ({ color:  0xffffff });
+            cube = new THREE.Mesh(geometry, material);
+            cube.position.set(2.3, 0.5, 2);
+            scene.add(cube);
+        }
+        //Brazo2.1
+        function createArm21() {
+            let geometry = new THREE.CubeGeometry(0.4, 2, 0.7);
+            let material = new THREE.MeshLambertMaterial ({ color:  0xffffff });
+            cube = new THREE.Mesh(geometry, material);
+            cube.position.set(2.33, -0.8, 2);
+            scene.add(cube);
+        }
+        //Brazo2.2
+        function createArm22() {
+            let geometry = new THREE.CylinderGeometry(0.4, 0.6, 0.7, 32);
+            let material = new THREE.MeshLambertMaterial({ color: 0xffffff });
+            let cylinder = new THREE.Mesh(geometry, material);
+            cylinder.position.set(2.33, -2.03, 2);
+            scene.add(cylinder);
+        }
+        //Brazo2.3
+        function createArm23() {
+            let geometry = new THREE.CubeGeometry(0.17, 0.9, 0.2);
+            let material = new THREE.MeshLambertMaterial ({ color:  0x0833A2 });
+            cube = new THREE.Mesh(geometry, material);
+            cube.position.set(2.33, -0.5, 2.3);
+            scene.add(cube);
+        }
+        function createLightPoint() {
+            let light = new THREE.PointLight(0xffffff, 1, 200);
+            let sphere = new THREE.SphereGeometry(0.5, 16, 8);
+            light.position.set(1, 5, 5);
+            light.add(
+                new THREE.Mesh(
+                    sphere,
+                    new THREE.MeshBasicMaterial({ color: 0xffffff })
+                )
+            );
+            scene.add(light);
+        }
+
+        function init() {
+            //create scene
+            scene = new THREE.Scene();
+            //create camera
+            createCamera();
+            //create brazo 1
+            createArm1();
+            createArm11();
+            createArm12();
+            createArm13();
+            //create brazo 2
+            createArm2();
+            createArm21();
+            createArm22();
+            createArm23();
+            //create cuerpo
+            createBody();
+            createBody4();
+            createBody5();
+            createBody6();
+            //create color cuerpo
+            createBody1();
+            createBody2();
+            //create light
+            createLightPoint();
+            //create cabeza
+            createHead();
+            createHead2();
+            //create cara
+            createFace();
+            createFace1();
+            createFace2();
+            //create rederer
+            createRenderer();
+            //element render
+        }
+
+        function animate(time) {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        init();
+        requestAnimationFrame(animate);
+    </script>
+</body>
+
+</html>
