@@ -27,12 +27,12 @@
 
         var controlsCubes = new (function () {
             this.addBuilding = function () {
-                let geometry = new THREE.CubeGeometry(2, Math.random() * 8, 2);
-            let material = new THREE.MeshNormalMaterial({ wireframe: false });
-            cube = new THREE.Mesh(geometry, material);
-            cube.name = "cube";
-            cube.position.set(Math.random() * (15 +15) -15, 1, Math.random() * (15 - (-15)) + (-15));
-            scene.add(cube);
+                let geometry = new THREE.CubeGeometry(2, Math.random() * 8 + 1, 2);
+                let material = new THREE.MeshLambertMaterial({ wireframe: false, color: parseInt(colorHEX()) });
+                cube = new THREE.Mesh(geometry, material);
+                cube.name = "cube";
+                cube.position.set(Math.random() * (15 + 15) - 15, 1, Math.random() * (15 - (-15)) + (-15));
+                scene.add(cube);
             };
         })();
 
@@ -47,6 +47,20 @@
                 100
             );
             camera.position.set(0, 0, 20);
+        }
+
+        function generarLetra() {
+            var letras = ["a", "b", "c", "d", "e", "f", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+            var numero = (Math.random() * 15).toFixed(0);
+            return letras[numero];
+        }
+
+        function colorHEX() {
+            var colorHex = "";
+            for (var i = 0; i < 6; i++) {
+                colorHex = colorHex + generarLetra();
+            }
+            return "0x" + colorHex;
         }
 
 
@@ -80,10 +94,10 @@
             light.add(
                 new THREE.Mesh(
                     sphere,
-                    new THREE.MeshBasicMaterial({ color: 0xffffff })
+                    new THREE.MeshBasicMaterial({ color: 0xff0000 })
                 )
             );
-            light.position.set(1, 0, 1);
+            light.position.set(1, 20, 1);
             scene.add(light);
         }
 
@@ -99,7 +113,6 @@
             //element render
             // createStats();
             // createDataGui();
-
             createLightPoint();
         }
         function animate(time) {
