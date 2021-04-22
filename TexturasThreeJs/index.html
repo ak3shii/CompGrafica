@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz ThreeJs</title>
+</head>
+
+<body>
+    <div id="myStats"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"
+        integrity="sha512-ZGgXd6TB5qjtvTU6Q5o/LJM4pwLNy8U8XXJh+vJZDXp2wC8ASrl4WOeivaq2fpYc3TnTCLzyDvVjY8YhvNYaXg=="
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/three@0.85.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/loaders/GLTFLoader.js"></script>
+    
+    <script>
+
+        var camera;
+        var renderer;
+        var material;
+        var cube;
+        var controlsOrbit;
+        var stats;
+        var scene;
+        var mesh;
+
+        function createCamera() {
+            camera = new THREE.PerspectiveCamera(
+                75,
+                window.innerWidth / window.innerHeight,
+                1,
+                100
+            );
+            camera.position.set(0, 2, 20);
+        }
+        function createRenderer() {
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            controlsOrbit = new THREE.OrbitControls(camera, renderer.domElement);
+            renderer.setClearColor(new THREE.Color(0xffffff));
+        }
+
+        function createPlane() {
+            var planeGeometry = new THREE.PlaneGeometry(80, 80, 1, 1);
+            var planeMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
+            var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+            plane.position.set(0, 0, 0);
+            plane.rotation.x = Math.PI / 2;
+            scene.add(plane);
+        }
+
+        function axesHelper() {
+            const axesHelper = new THREE.AxesHelper(50);
+            scene.add(axesHelper);
+        }
+
+        function createLightPoint() {
+            let light = new THREE.PointLight(0xffffff, 1, 100);
+            let sphere = new THREE.SphereGeometry(0.5, 16, 8);
+            light.name = "luz punto";
+            light.add(
+                new THREE.Mesh(
+                    sphere,
+                    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+                )
+            );
+            light.position.set(1, 5, 2);
+            scene.add(light);
+        }
+
+     function LoadObject() {
+         const gltfLoader = new THREE.GLTFLoader();
+         gltfLoader.load("Objects/botella.glb", (miObjeto) => {
+             mesh = miObjeto.scene;
+             mesh.children[0].material = new THREE.MeshBasicMaterial();
+             mesh.position.set(1, 1, 1);
+             mesh.name = "objetoGLTF";
+             scene.add(mesh);
+             controls.update();
+         });
+     }
+        function init() {
+            //create scene
+            scene = new THREE.Scene();
+            //create camera
+            createCamera();
+            //create sphere
+            axesHelper();
+            //create rederer
+            createRenderer();
+            // createDataGui();
+            createLightPoint();
+            // createplane
+            createPlane();
+            LoadObject();
+        }
+        function animate(time) {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+            controlsOrbit.update();
+        }
+        init();
+        requestAnimationFrame(animate);
+    </script>
+</body>
