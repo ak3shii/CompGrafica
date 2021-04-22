@@ -13,6 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"
         integrity="sha512-ZGgXd6TB5qjtvTU6Q5o/LJM4pwLNy8U8XXJh+vJZDXp2wC8ASrl4WOeivaq2fpYc3TnTCLzyDvVjY8YhvNYaXg=="
         crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/three@0.85.0/examples/js/controls/OrbitControls.js"></script>
     <script>
         var scene;
         var camera;
@@ -21,6 +22,7 @@
         var sphere;
         var cube;
         var cylinder;
+        var controlsOrbit;
 
         function createCamera() {
             camera = new THREE.PerspectiveCamera(
@@ -36,16 +38,18 @@
             renderer = new THREE.WebGLRenderer();
             renderer.setSize(window.innerWidth, window.innerHeight);
             document.body.appendChild(renderer.domElement);
+            controlsOrbit = new THREE.OrbitControls(camera, renderer.domElement);
         }
-        
+
         //Cabeza
         function createHead() {
-            let geometry = new THREE.SphereGeometry(1.26, 10, 10);
-            let material = new THREE.MeshLambertMaterial({color: 0x9B9B9B
+            let geometry = new THREE.SphereGeometry(1.2, 10, 10);
+            let material = new THREE.MeshLambertMaterial({
+                color: 0x9B9B9B
             });
             sphere = new THREE.Mesh(geometry, material);
             scene.add(sphere);
-            sphere.position.set(1, 1.6, 1.8);
+            sphere.position.set(1, 1.6, 2);
         }
 
         function createHead2() {
@@ -59,9 +63,9 @@
         //Cara
         function createFace() {
             let geometry = new THREE.CubeGeometry(0.65, 0.47, 0.7);
-            let material = new THREE.MeshLambertMaterial ({ color:  0x0833A2 });
+            let material = new THREE.MeshLambertMaterial({ color: 0x0833A2 });
             cube = new THREE.Mesh(geometry, material);
-            cube.position.set(1, 2, 2.67);
+            cube.position.set(1, 2, 2.8);
             scene.add(cube);
         }
         //Cara ojo
@@ -73,7 +77,7 @@
             });
             sphere = new THREE.Mesh(geometry, material);
             scene.add(sphere);
-            sphere.position.set(1, 2, 2.9);
+            sphere.position.set(1, 2, 3.06);
         }
         function createFace2() {
             let geometry = new THREE.SphereGeometry(0.08, 10, 10);
@@ -83,9 +87,9 @@
             });
             sphere = new THREE.Mesh(geometry, material);
             scene.add(sphere);
-            sphere.position.set(0.78, 1.85, 3);
+            sphere.position.set(0.78, 1.85, 3.1);
         }
-        
+
         //Cuerpo
         function createBody() {
             let geometry = new THREE.CylinderGeometry(1.2, 1.2, 2.8, 32);
@@ -99,42 +103,42 @@
             let geometry = new THREE.CubeGeometry(1.2, 0.2, 0.2);
             let material = new THREE.MeshLambertMaterial({ color: 0x0833A2 });
             let cube = new THREE.Mesh(geometry, material);
-            cube.position.set(1, 1.2,3.1);
+            cube.position.set(1, 1.2, 3.1);
             scene.add(cube);
         }
         function createBody2() {
             let geometry = new THREE.CubeGeometry(1.2, 0.2, 0.2);
             let material = new THREE.MeshLambertMaterial({ color: 0x0833A2 });
             let cube = new THREE.Mesh(geometry, material);
-            cube.position.set(1, 0.9,3.1);
+            cube.position.set(1, 0.9, 3.1);
             scene.add(cube);
         }
         function createBody4() {
             let geometry = new THREE.CubeGeometry(0.8, 0.8, 0.2);
             let material = new THREE.MeshLambertMaterial({ color: 0x0833A2 });
             let cube = new THREE.Mesh(geometry, material);
-            cube.position.set(1, 0.1,3.1);
+            cube.position.set(1, 0.1, 3.1);
             scene.add(cube);
         }
         function createBody5() {
             let geometry = new THREE.CubeGeometry(0.48, 0.25, 0.2);
             let material = new THREE.MeshLambertMaterial({ color: 0x9b9b9b });
             let cube = new THREE.Mesh(geometry, material);
-            cube.position.set(1, 0.25,3.12);
+            cube.position.set(1, 0.25, 3.12);
             scene.add(cube);
         }
         function createBody6() {
             let geometry = new THREE.CubeGeometry(0.48, 0.25, 0.2);
             let material = new THREE.MeshLambertMaterial({ color: 0x9b9b9b });
             let cube = new THREE.Mesh(geometry, material);
-            cube.position.set(1, -0.08,3.12);
+            cube.position.set(1, -0.08, 3.12);
             scene.add(cube);
         }
-        
+
         //Brazo1
         function createArm1() {
             let geometry = new THREE.CubeGeometry(0.7, 0.8, 0.7);
-            let material = new THREE.MeshLambertMaterial ({ color:  0xffffff });
+            let material = new THREE.MeshLambertMaterial({ color: 0xffffff });
             cube = new THREE.Mesh(geometry, material);
             cube.position.set(-0.3, 0.5, 2);
             scene.add(cube);
@@ -142,7 +146,7 @@
         //Brazo1.1
         function createArm11() {
             let geometry = new THREE.CubeGeometry(0.4, 2, 0.7);
-            let material = new THREE.MeshLambertMaterial ({ color:  0xffffff });
+            let material = new THREE.MeshLambertMaterial({ color: 0xffffff });
             cube = new THREE.Mesh(geometry, material);
             cube.position.set(-0.3, -0.8, 2);
             scene.add(cube);
@@ -158,7 +162,7 @@
         //Brazo1.3
         function createArm13() {
             let geometry = new THREE.CubeGeometry(0.17, 0.9, 0.2);
-            let material = new THREE.MeshLambertMaterial ({ color:  0x0833A2 });
+            let material = new THREE.MeshLambertMaterial({ color: 0x0833A2 });
             cube = new THREE.Mesh(geometry, material);
             cube.position.set(-0.3, -0.5, 2.3);
             scene.add(cube);
@@ -166,7 +170,7 @@
         //Brazo2
         function createArm2() {
             let geometry = new THREE.CubeGeometry(0.7, 0.8, 0.7);
-            let material = new THREE.MeshLambertMaterial ({ color:  0xffffff });
+            let material = new THREE.MeshLambertMaterial({ color: 0xffffff });
             cube = new THREE.Mesh(geometry, material);
             cube.position.set(2.3, 0.5, 2);
             scene.add(cube);
@@ -174,7 +178,7 @@
         //Brazo2.1
         function createArm21() {
             let geometry = new THREE.CubeGeometry(0.4, 2, 0.7);
-            let material = new THREE.MeshLambertMaterial ({ color:  0xffffff });
+            let material = new THREE.MeshLambertMaterial({ color: 0xffffff });
             cube = new THREE.Mesh(geometry, material);
             cube.position.set(2.33, -0.8, 2);
             scene.add(cube);
@@ -190,7 +194,7 @@
         //Brazo2.3
         function createArm23() {
             let geometry = new THREE.CubeGeometry(0.17, 0.9, 0.2);
-            let material = new THREE.MeshLambertMaterial ({ color:  0x0833A2 });
+            let material = new THREE.MeshLambertMaterial({ color: 0x0833A2 });
             cube = new THREE.Mesh(geometry, material);
             cube.position.set(2.33, -0.5, 2.3);
             scene.add(cube);
@@ -198,7 +202,7 @@
         function createLightPoint() {
             let light = new THREE.PointLight(0xffffff, 1, 200);
             let sphere = new THREE.SphereGeometry(0.5, 16, 8);
-            light.position.set(1, 5, 5);
+            light.position.set(1, 7, 4);
             light.add(
                 new THREE.Mesh(
                     sphere,
@@ -208,6 +212,18 @@
             scene.add(light);
         }
 
+        function createLightPoint1() {
+            let light = new THREE.PointLight(0xffffff, 1, 200);
+            let sphere = new THREE.SphereGeometry(0.5, 16, 8);
+            light.position.set(1, 7, -1);
+            light.add(
+                new THREE.Mesh(
+                    sphere,
+                    new THREE.MeshBasicMaterial({ color: 0xffffff })
+                )
+            );
+            scene.add(light);
+        }
         function init() {
             //create scene
             scene = new THREE.Scene();
@@ -233,6 +249,7 @@
             createBody2();
             //create light
             createLightPoint();
+            createLightPoint1();
             //create cabeza
             createHead();
             createHead2();
@@ -248,6 +265,7 @@
         function animate(time) {
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
+            controlsOrbit.update();
         }
 
         init();
