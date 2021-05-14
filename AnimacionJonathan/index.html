@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz ThreeJs</title>
+    <title>AnimacionJonathan</title>
 </head>
 
 <body>
@@ -77,7 +77,7 @@
         }
 
 
-        function Grid() {
+        function grid() {
             var grid = new THREE.GridHelper(100, 20, 0xff0000, 0x000000);
             grid.material.opacity = 0.2;
             grid.material.transparent = true;
@@ -114,16 +114,17 @@
             scene.fog = new THREE.Fog(0xa0a0a0, 100, 10000);
             //create camera
             createCamera();
-            //create sphere
             // axesHelper();
             //create rederer
             createRenderer();
-            // createDataGui();
+            // create hemist point light;
             createHemistPoint();
             // createplane
             createPlane();
+            // load character
             LoadObject();
-            Grid();
+            // create grids
+            grid();
         }
         function animate() {
             requestAnimationFrame(animate);
