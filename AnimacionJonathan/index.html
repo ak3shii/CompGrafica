@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz ThreeJs</title>
+</head>
+
+<body>
+    <div id="myStats"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/94/three.min.js"
+        integrity="sha512-ZGgXd6TB5qjtvTU6Q5o/LJM4pwLNy8U8XXJh+vJZDXp2wC8ASrl4WOeivaq2fpYc3TnTCLzyDvVjY8YhvNYaXg=="
+        crossorigin="anonymous"></script>
+    <script src="./js/OrbitControls.js"></script>
+    <script src="./js/inflate.min.js"></script>
+    <script src="./js/FBXLoader.js"></script>
+    <script src="./js/WebGL.js"></script>
+
+    <script>
+
+        var camera;
+        var renderer;
+        var material;
+        var cube;
+        var controlsOrbit;
+        var stats;
+        var scene;
+        var mesh;
+        var clock = new THREE.Clock();
+        var mixers = [];
+
+        function createCamera() {
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+            camera.position.set(10, 10, 30);
+        }
+        function createRenderer() {
+            renderer = new THREE.WebGLRenderer({
+                antialias: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+            controlsOrbit = new THREE.OrbitControls(camera, renderer.domElement);
+            renderer.setClearColor(new THREE.Color(0xffffff));
+        }
+
+        function createPlane() {
+            var plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(2000, 2000),
+                new THREE.MeshPhongMaterial({
+                    color: 0x666666,
+                    depthWrite: false
+                }));
+
+            plane.rotation.x = -Math.PI / 2;
+            plane.receiveShadow = true;
+            scene.add(plane);
+        }
+
+        function axesHelper() {
+            const axesHelper = new THREE.AxesHelper(50);
+            scene.add(axesHelper);
+        }
+
+        function createHemistPoint() {
+            let light = new THREE.HemisphereLight(0xffffff, 0x444444);
+            light.position.set(0, 20, 0);
+            let sphere = new THREE.SphereGeometry(0.5, 16, 8);
+            light.add(
+                new THREE.Mesh(
+                    sphere,
+                    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+                )
+            );
+            scene.add(light);
+        }
+
+
+        function Grid() {
+            var grid = new THREE.GridHelper(100, 20, 0xff0000, 0x000000);
+            grid.material.opacity = 0.2;
+            grid.material.transparent = true;
+            scene.add(grid);
+        }
+
+        function LoadObject() {
+            var loader2 = new THREE.FBXLoader();
+            loader2.load('./src/JumpAnimation.fbx', function (object2) {
+                object2.mixer = new THREE.AnimationMixer(object2);
+                mixers.push(object2.mixer);
+                var action = object2.mixer.clipAction(object2.animations[0]);
+                action.play();
+                object2.traverse(function (child) {
+                    if (child.isMesh) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                    }
+                });
+                object2.scale.set(0.01, 0.01, 0.01);
+                scene.add(object2);
+
+            });
+        }
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        function init() {
+            //create scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xa0a0a0);
+            scene.fog = new THREE.Fog(0xa0a0a0, 100, 10000);
+            //create camera
+            createCamera();
+            //create sphere
+            // axesHelper();
+            //create rederer
+            createRenderer();
+            // createDataGui();
+            createHemistPoint();
+            // createplane
+            createPlane();
+            LoadObject();
+            Grid();
+        }
+        function animate() {
+            requestAnimationFrame(animate);
+            if (this.mixers.length > 0) {
+                for (var i = 0; i < this.mixers.length; i++) {
+
+                    this.mixers[i].update(clock.getDelta());
+
+                }
+
+            }
+            renderer.render(scene, camera);
+            controlsOrbit.update();
+        }
+        init();
+        requestAnimationFrame(animate);
+    </script>
+</body>
