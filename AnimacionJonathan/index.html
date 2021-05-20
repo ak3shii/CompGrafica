@@ -86,7 +86,7 @@
 
         function LoadObject() {
             var loader2 = new THREE.FBXLoader();
-            loader2.load('./src/JumpAnimation.fbx', function (object2) {
+            loader2.load('./src/DanceAmongUs.fbx', function (object2) {
                 object2.mixer = new THREE.AnimationMixer(object2);
                 mixers.push(object2.mixer);
                 var action = object2.mixer.clipAction(object2.animations[0]);
