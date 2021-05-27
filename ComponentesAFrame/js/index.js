@@ -9,7 +9,7 @@ AFRAME.registerComponent('random-color', {
             color = colores[Math.floor(Math.random() * 5)]
             
             el.setAttribute('color', color);
-        }, 600)
+        }, 5000)
         console.log(this.el)
     }
 });
